@@ -1,0 +1,81 @@
+body {
+  margin: 1rem;
+}
+
+.hide-elm {
+  display: none;
+}
+
+.header-color {
+  background-color: #90A4AE;
+  font-family: 'Libre Franklin', sans-serif;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  margin-top: .5rem;
+  width: 7rem;
+}
+
+.save-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.player-list-wrapper {
+  display: initial
+}
+
+.main-page > div {
+  width: 50%;
+  margin-right: 1rem;
+}
+
+.player-wrapper > div {
+  width: 100%;
+  margin-bottom: .5rem;
+}
+
+.input-container {
+  margin-bottom: 1rem;
+}
+
+.input-wrapper {
+  margin-bottom: .5rem;
+}
+
+.player-name {
+  font-size: 1.2rem;
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.player-btn {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+div i {
+  margin-right: 1rem;
+}
+
+.team-info {
+  background-color: #F5F5F5;
+}
+
+.list-group > button {
+  margin-top: 0;
+  margin-bottom: .5rem;
+  width: 100%;
+}
+
+@media (max-width: 575px) { 
+
+  .main-page > div {
+    width: 100%;
+  }
+
+ }
