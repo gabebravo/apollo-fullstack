@@ -3,7 +3,7 @@ import { ListGroup, ListGroupItem, Collapse, Input, Button } from 'reactstrap';
 import { gql } from 'apollo-boost';
 import { Query, Mutation } from 'react-apollo';
 import { REM_GET_TEAMS } from '../queries';
-import { formatUpdPlayers } from '../utils';
+import { formatUpdPlayers, formatPlayers } from '../utils';
 const shortid = require('shortid');
 
 const DELETE_TEAM = gql`
@@ -64,6 +64,12 @@ class TeamsList extends Component {
                 {' '}
                 {data.teams.length > 0
                   ? data.teams.map(team => {
+                      const ouTeam = {
+                        __typename: 'Team',
+                        id: shortid.generate(),
+                        name: team.name,
+                        players: formatPlayers(formatUpdPlayers(this.state))
+                      };
                       return (
                         <div key={team.id}>
                           <ListGroupItem className="team-info">
@@ -166,13 +172,27 @@ class TeamsList extends Component {
                                           id: team.id,
                                           players: formatUpdPlayers(this.state)
                                         },
-                                        refetchQueries: [{ query: REM_GET_TEAMS }]
+                                        optimisticResponse: {
+                                          __typename: 'Mutation',
+                                          updateTeam: ouTeam
+                                        },
+                                        update: (proxy, { data: { updateTeam } }) => {
+                                          const data = proxy.readQuery({ query: REM_GET_TEAMS });
+                                          data.teams.splice(
+                                            data.teams.findIndex(teamObj => teamObj.id === team.id),
+                                            1,
+                                            updateTeam
+                                          );
+                                          proxy.writeQuery({ query: REM_GET_TEAMS, data });
+                                        }
                                       })
-                                        .then(result =>
-                                          this.setState({
-                                            isOpen: !this.state.isOpen
-                                          })
-                                        )
+                                        .then(result => {
+                                          if (result) {
+                                            this.setState({
+                                              isOpen: !this.state.isOpen
+                                            });
+                                          }
+                                        })
                                         .catch(error => console.log('error'))
                                     }>
                                     Update Team

@@ -21,7 +21,7 @@ type Query {
 type Mutation {
   addTeam(name: String!, players: [PlayerInput]): Team!
   deleteTeam(id: ID!): [Team]
-  updateTeam(id: ID!, players: [PlayerInput]): [Team]
+  updateTeam(id: ID!, players: [PlayerInput]): Team
 }
 `
 

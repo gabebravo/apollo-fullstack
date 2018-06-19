@@ -28,13 +28,20 @@ const resolvers = {
     },
 
     updateTeam: (root, { id, players }) => {
-      Team.update({ _id: id }, { players })
-      .then( () => {
-        return Team.find({})
-      })
+      return Team.findOneAndUpdate({ _id: id }, { players }, {new: true})
     }
     
   }
 }
 
 module.exports = resolvers;
+
+// updateTeam: (root, { id, players }) => {
+//   Team.findOne({ _id: id }, function (err,team) { 
+//     if(!err) { 
+//       team.players = players;
+//       team.save()
+//     }
+//   })
+//   return Team.find({})
+// }
