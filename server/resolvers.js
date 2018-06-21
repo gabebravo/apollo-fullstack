@@ -7,7 +7,7 @@ const resolvers = {
   Query: { 
 
     team: (root, { id }) => {
-      return Team.findOne({ id })
+      return Team.findById(id)
     },
 
     teams: () => Team.find({})

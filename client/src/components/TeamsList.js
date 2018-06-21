@@ -166,8 +166,11 @@ class TeamsList extends Component {
                                 {updateTeam => (
                                   <Button
                                     color="success"
-                                    onClick={() =>
-                                      updateTeam({
+                                    onClick={async () => {
+                                      await this.setState({
+                                        isOpen: !this.state.isOpen
+                                      });
+                                      return updateTeam({
                                         variables: {
                                           id: team.id,
                                           players: formatUpdPlayers(this.state)
@@ -186,14 +189,8 @@ class TeamsList extends Component {
                                           proxy.writeQuery({ query: REM_GET_TEAMS, data });
                                         }
                                       })
-                                        .then(result => {
-                                          if (result) {
-                                            this.setState({
-                                              isOpen: !this.state.isOpen
-                                            });
-                                          }
-                                        })
                                         .catch(error => console.log('error'))
+                                    }
                                     }>
                                     Update Team
                                   </Button>
