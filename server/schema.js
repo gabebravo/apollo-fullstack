@@ -22,8 +22,7 @@ type Mutation {
   addTeam(name: String!, players: [PlayerInput]): Team!
   deleteTeam(id: ID!): [Team]
   updateTeam(id: ID!, players: [PlayerInput]): Team
-}
-`
+}`
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 module.exports = schema;
