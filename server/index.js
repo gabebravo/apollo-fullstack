@@ -3,20 +3,23 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const schema = require('./schema');
 const mongoose = require('mongoose');
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-const server = express()
+const { graphqlExpress } = require('apollo-server-express');
+const app = express()
+const port = process.env.PORT;
 
-const db = 'mongodb://localhost:27017/graphTeams';
+const db = process.env.MONGODB_URL;
 mongoose.Promise = global.Promise;
 mongoose.connect(db, {});
 
-server.use('/graphiql', graphiqlExpress({
-  endpointURL: '/graphql'
-}));
+// server static react bundle
+// this is will add the client in deployment
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
 
-// IMPORTANT : REMOVE CORS WHEN DEPLOYING TO PRODUCTION
-server.use( '/graphql', cors(), bodyParser.json(), graphqlExpress({schema}) )
+// Production ready graphql server
+app.use( '/graphql', bodyParser.json(), graphqlExpress({schema}) )
 
-server.listen( 4000, () => {
-  console.log('listening on port 4000')
-})
+app.listen(port, () => {
+  console.log(`listening on port ${port}`);
+});
