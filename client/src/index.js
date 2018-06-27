@@ -9,7 +9,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_GQL_URI,
+  uri: 'https://fullstack-apollo.herokuapp.com/graphql',
   clientState: {
     defaults, resolvers
   }
